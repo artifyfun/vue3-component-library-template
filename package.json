@@ -1,14 +1,14 @@
 {
   "name": "vue3-component-library-template",
-  "author": "Your name <yourmail@mail.com> (https://github.com/[USERNAME])",
+  "author": "artifyfun <artifyfun@mail.com> (https://github.com/artifyfun)",
   "version": "0.0.0",
   "license": "MIT",
   "private": false,
-  "description": "Your package description",
+  "description": "A Vue 3 component library template with Vite, Storybook, Vitepress, and Vitest",
   "contributors": [
     {
-      "name": "Your name",
-      "email": "yourmail@mail.com"
+      "name": "artifyfun",
+      "email": "artifyfun@mail.com"
     }
   ],
   "keywords": [
@@ -18,11 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/[USERNAME]/vue3-component-library-template.git"
+    "url": "https://github.com/artifyfun/vue3-component-library-template.git"
   },
-  "homepage": "https://[USERNAME].github.io/vue3-component-library-template/",
+  "homepage": "https://artifyfun.github.io/vue3-component-library-template/",
   "bugs": {
-    "url": "https://github.com/[USERNAME]/vue3-component-library-template/issues"
+    "url": "https://github.com/artifyfun/vue3-component-library-template/issues"
   },
   "files": [
     "dist"
@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
-    "vue": "^3.3.8"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
@@ -79,7 +79,7 @@
     "storybook": "^7.5.3",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "vitepress": "^1.0.0-rc.24",
+    "vitepress": "^1.0.1",
     "vitest": "^0.34.6",
     "vue-tsc": "^1.8.22"
   }
