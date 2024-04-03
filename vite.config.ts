@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '~': resolve(__dirname, 'src', 'myComponentLibrary'),
+          '~': resolve(__dirname, 'src', 'lib'),
         },
       },
       build: {
@@ -31,14 +31,14 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '~': resolve(__dirname, 'src', 'myComponentLibrary'),
+          '~': resolve(__dirname, 'src', 'lib'),
         },
       },
       build: {
         lib: {
-          entry: resolve(__dirname, 'src/myComponentLibrary/index.ts'),
-          name: 'Vue3ComponentLibraryTemplate',
-          fileName: 'vue3-component-library-template',
+          entry: resolve(__dirname, 'src/lib/index.ts'),
+          name: 'ArtifyfunVueComponents',
+          fileName: 'artifyfun-vue-components',
         },
         rollupOptions: {
           external: ['vue'],

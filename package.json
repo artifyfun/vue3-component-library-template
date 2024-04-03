@@ -1,10 +1,10 @@
 {
-  "name": "vue3-component-library-template",
+  "name": "artifyfun-vue-components",
   "author": "artifyfun <artifyfun@mail.com> (https://github.com/artifyfun)",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "private": false,
-  "description": "A Vue 3 component library template with Vite, Storybook, Vitepress, and Vitest",
+  "description": "Artifyfun Vue Components For Low Code Development",
   "contributors": [
     {
       "name": "artifyfun",
@@ -18,21 +18,21 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/artifyfun/vue3-component-library-template.git"
+    "url": "https://github.com/artifyfun/artifyfun-vue-components.git"
   },
-  "homepage": "https://artifyfun.github.io/vue3-component-library-template/",
+  "homepage": "https://artifyfun.github.io/artifyfun-vue-components/",
   "bugs": {
-    "url": "https://github.com/artifyfun/vue3-component-library-template/issues"
+    "url": "https://github.com/artifyfun/artifyfun-vue-components/issues"
   },
   "files": [
     "dist"
   ],
-  "main": "./dist/vue3-component-library-template.umd.cjs",
-  "module": "./dist/vue3-component-library-template.js",
+  "main": "./dist/artifyfun-vue-components.umd.cjs",
+  "module": "./dist/artifyfun-vue-components.js",
   "exports": {
     ".": {
-      "import": "./dist/vue3-component-library-template.js",
-      "require": "./dist/vue3-component-library-template.umd.cjs",
+      "import": "./dist/artifyfun-vue-components.js",
+      "require": "./dist/artifyfun-vue-components.umd.cjs",
       "types": "./dist/types/index.d.ts"
     },
     "./style.css": "./dist/style.css"

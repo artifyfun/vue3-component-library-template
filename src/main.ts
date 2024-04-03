@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { useComponentLibrary } from './myComponentLibrary'
+import { useComponentLibrary } from './lib'
 import App from './App.vue'
 import './style.css'
 

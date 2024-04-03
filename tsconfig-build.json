@@ -14,9 +14,9 @@
     "types": ["node"],
     "baseUrl": "./",
     "paths": {
-      "~/*": ["src/myComponentLibrary/*"]
+      "~/*": ["src/lib/*"]
     }
   },
-  "include": ["src/myComponentLibrary/*.ts", "src/myComponentLibrary/*.d.ts"],
+  "include": ["src/lib/*.ts", "src/lib/*.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

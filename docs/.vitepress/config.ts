@@ -2,13 +2,13 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'Vue3 Component Library template',
-  description: 'Vitepress documentation example for vue3-component-library-template repository',
+  title: 'Artifyfun Vue Components',
+  description: 'Vitepress documentation for artifyfun-vue-components repository',
   lang: 'en-US',
-  base: '/vue3-component-library-template/',
+  base: '/artifyfun-vue-components/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/logo.webp',
+    logo: '/logo.png',
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Examples', link: '/markdown-examples' },
@@ -25,7 +25,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/kaandesu/vue3-component-library-template' },
+      { icon: 'github', link: 'https://github.com/artifyfun/artifyfun-vue-components' },
     ],
   },
 })
