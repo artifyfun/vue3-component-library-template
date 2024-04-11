@@ -7,6 +7,9 @@ dependencies:
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.3.2)
+  ws:
+    specifier: ^8.16.0
+    version: 8.16.0
 
 devDependencies:
   '@changesets/cli':
@@ -36,6 +39,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.9.4
     version: 20.9.4
+  '@types/ws':
+    specifier: ^8.5.10
+    version: 8.5.10
   '@vitest/coverage-v8':
     specifier: ^0.34.6
     version: 0.34.6(vitest@0.34.6)
@@ -3929,7 +3935,7 @@ packages:
       util: 0.12.5
       util-deprecate: 1.0.2
       watchpack: 2.4.0
-      ws: 8.14.2
+      ws: 8.16.0
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -4180,7 +4186,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.4.21(typescript@5.3.2)
-      vue-component-type-helpers: 2.0.7
+      vue-component-type-helpers: 2.0.12
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -4463,6 +4469,12 @@ packages:
 
   /@types/web-bluetooth@0.0.20:
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
+    dev: true
+
+  /@types/ws@8.5.10:
+    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
+    dependencies:
+      '@types/node': 20.9.4
     dev: true
 
   /@types/yargs-parser@21.0.3:
@@ -9781,8 +9793,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /vue-component-type-helpers@2.0.7:
-    resolution: {integrity: sha512-7e12Evdll7JcTIocojgnCgwocX4WzIYStGClBQ+QuWPinZo/vQolv2EMq4a3lg16TKfwWafLimG77bxb56UauA==}
+  /vue-component-type-helpers@2.0.12:
+    resolution: {integrity: sha512-iVJugClQdu3ZyF0N4CF3Egi+gWYfnxlIPPGtFXZG29rF3kQIuziP+k7rVGCCHiibIOQ1SlspKjrh+LRYzMpwTA==}
     dev: true
 
   /vue-demi@0.14.7(vue@3.4.21):
@@ -10042,8 +10054,8 @@ packages:
       async-limiter: 1.0.1
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+  /ws@8.16.0:
+    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -10053,7 +10065,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

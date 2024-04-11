@@ -2,6 +2,7 @@ import type { App } from 'vue'
 import * as plugins from './plugins'
 import * as components from './components'
 import * as directives from './directives'
+import * as utils from './utils'
 import type { PluginOptions, DirectiveName, PluginName, ComponentName } from './types'
 import './style.css'
 import { defu } from 'defu'
@@ -103,4 +104,5 @@ const log = (base: string, as: string | boolean, succ: boolean, showLogs: boolea
 export * from './components'
 export * from './directives'
 export * from './plugins'
-export { useComponentLibrary, components, directives, plugins }
+export * from './utils'
+export { useComponentLibrary, components, directives, plugins, utils }
