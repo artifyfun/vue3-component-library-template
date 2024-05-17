@@ -1,6 +1,6 @@
 <template>
   <div class="card"
-       :class="{ active, interacting, loading }"
+       :class="{ active, interacting, image__loading: imageLoading, card__loading: cardLoading }"
        ref="card"
        :style="styles"
        :data-subtypes="subtypes"
@@ -33,9 +33,9 @@ import { useSpring } from "@vueuse/motion";
 import { clamp, round } from "../helpers/Math";
 import CardShine from "./card-shine.vue";
 import CardGlare from "./card-glare.vue";
+import back_img from "../assets/img/tcg-card-back-2x.jpg";
 
 const galaxyPosition = Math.floor(Math.random() * 1500);
-const back_img = ref("https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg")
 
 type supertype = 'Pokémon' | 'Trainer';
 type subtype = 'Basic' | 'Supporter' | 'Stage 1' | 'Stage 2' | 'V' | 'Fusion Strike' | 'VMAX' | 'Single Strike' | 'Rapid Strike' | 'VSTAR' | 'Stadium' | 'Item' | 'Pokémon Tool';
@@ -47,6 +47,7 @@ export type card = {
   subtypes: subtype[];
   number: string;
   rarity: rarity;
+  cardLoading: boolean;
   images: {
     small: string,
     large: string
@@ -62,6 +63,7 @@ const props = defineProps([
   'rarity',
   'gallery',
   'active',
+  'cardLoading'
 ])
 
 const card = ref<Element | null>(null)
@@ -92,7 +94,7 @@ const springScale = getSpringControls(springScaleRef, springD)
 
 const firstPop = ref(true)
 const interacting = ref(false)
-const loading = ref(true)
+const imageLoading = ref(true)
 const debounce = ref<NodeJS.Timeout | number>(0)
 const front_img = ref("")
 
@@ -194,7 +196,7 @@ const interact = (e: any) => {
 }
 
 const imageLoader = () => {
-  loading.value = false;
+  imageLoading.value = false;
 }
 
 const interactEnd = (e: any, delay = 100) => {
@@ -338,7 +340,7 @@ onBeforeUnmount(() => {
     }
   }
 
-  &.loading {
+  &.image__loading {
     .card__front {
       opacity: 0;
     }
