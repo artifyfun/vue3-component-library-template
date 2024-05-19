@@ -1,11 +1,13 @@
 <template>
-  <a-config-provider :locale="zhCN"
-                     :theme="{
-    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-  }">
-    <div class="image-uploader">
+  <div class="image-uploader">
+    <a-config-provider
+      :locale="zhCN"
+      :theme="{
+        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }"
+    >
       <div class="showcase" v-if="showShowcase && maxCount === 1 && state.fileList[0]?.url">
-        <img :src="state.fileList[0]?.url" :alt="state.fileList[0]?.name">
+        <img :src="state.fileList[0]?.url" :alt="state.fileList[0]?.name" />
       </div>
       <a-upload
         class="uploader"
@@ -18,7 +20,6 @@
         :maxCount="maxCount"
         :multiple="multiple"
         :showUploadList="showUploadList"
-        :withCredentials="true"
         @preview="handlePreview"
         @change="handleChange"
         @remove="handleRemove"
@@ -31,24 +32,28 @@
       <a-modal :open="state.previewVisible" :title="state.previewTitle" :footer="null" @cancel="handleCancel">
         <img alt="example" style="width: 100%" :src="state.previewImage" />
       </a-modal>
-    </div>
-  </a-config-provider>
+    </a-config-provider>
+  </div>
 </template>
 
 <script setup>
-import { reactive, ref, defineModel } from 'vue'
-import { PlusOutlined } from '@ant-design/icons-vue';
-import { theme } from 'ant-design-vue';
-import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-dayjs.locale('zh-cn');
+import { reactive, ref } from 'vue'
+import { PlusOutlined } from '@ant-design/icons-vue'
+import { theme } from 'ant-design-vue'
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
+dayjs.locale('zh-cn')
 
+const emits = defineEmits(['uploadDone', 'update:modelValue'])
 
 const props = defineProps({
+  modelValue: {
+    type: String,
+  },
   isDark: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   action: {
     type: String,
@@ -94,51 +99,49 @@ const state = reactive({
   previewTitle: '',
 })
 
-const model = defineModel();
-
 function getBase64(file) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = error => reject(error)
+  })
 }
 
 const handleCancel = () => {
-  state.previewVisible = false;
-  state.previewTitle = '';
-};
+  state.previewVisible = false
+  state.previewTitle = ''
+}
 
 const handleChange = ({ file, fileList }) => {
   state.fileList = fileList.map(file => {
     if (file.response) {
-      file.url = file.response.url;
+      file.url = file.response.url
     }
-    return file;
-  });
+    return file
+  })
 
   if (file.status === 'done') {
-    model.value = file.response?.name;
+    emits('update:modelValue', file.response?.name)
+    emits('uploadDone', file.response?.name)
   }
-};
+}
 
 const handleRemove = () => {
-  model.value = '';
-};
+  emits('update:modelValue')
+}
 
-
-const handlePreview = async (file) => {
+const handlePreview = async file => {
   if (!file.url && !file.preview) {
     file.preview = await getBase64(file.originFileObj)
   }
-  state.previewImage = file.url || file.preview;
-  state.previewVisible = true;
-  state.previewTitle = file.name || file.url.substring(file.url.lastIndexOf('/') + 1);
-};
+  state.previewImage = file.url || file.preview
+  state.previewVisible = true
+  state.previewTitle = file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+}
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .image-uploader {
   width: 300px;
   height: 400px;
@@ -160,6 +163,10 @@ const handlePreview = async (file) => {
 
   .uploader {
     .uploader-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       &:hover {
         cursor: pointer;
       }

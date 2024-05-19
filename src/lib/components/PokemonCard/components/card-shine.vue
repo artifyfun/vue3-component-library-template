@@ -9,7 +9,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .card__shine {
   display: grid;
   overflow: hidden;

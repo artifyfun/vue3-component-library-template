@@ -64,7 +64,7 @@
     "@vitejs/plugin-vue": "^4.5.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/motion": "^2.1.0",
-    "vue": "^3.4.21",
+    "vue": "3.4.23",
     "ws": "^8.16.0"
   },
   "devDependencies": {

@@ -3,13 +3,19 @@
     <PokemonCard v-bind="card"
                  @click.native.stop="cardActive = !cardActive"
                  :active="cardActive" />
-    <ImageUploader />
+    <ImageUploader :isDark="true" />
   </div>
 </template>
 <script setup>
 import { ref } from 'vue'
 import PokemonCard from './lib/components/PokemonCard/components/card.vue'
 import ImageUploader from './lib/components/ImageUploader/index.vue'
+
+// import '../dist/style.css'
+// import {
+//   PokemonCard,
+//   ImageUploader
+// } from '../dist/artifyfun-vue-components.js'
 
 const cardActive = ref(false)
 
