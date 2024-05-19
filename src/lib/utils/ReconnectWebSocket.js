@@ -14,21 +14,8 @@ import WebSocket from 'ws';
  * @api public
  */
 
-interface options {
-  url: string
-  protocols?: string | string[]
-  enableReconnect?: boolean
-  pingTimeout?: number
-  pongTimeout?: number
-  reconnectTimeout?: number
-  pingMsg?: string | (() => string)
-  closeMsg?: string | (() => string)
-  repeatLimit?: number
-  clientOptions?: WebSocket.ClientOptions
-}
-
 export class ReconnectWebSocket {
-  options: options = {
+  options = {
     url: '',
     protocols: '',
     enableReconnect: true,
@@ -40,20 +27,20 @@ export class ReconnectWebSocket {
     repeatLimit: undefined,
     clientOptions: undefined
   }
-  ws: WebSocket | null = null
-  repeat: number
-  lockReconnect: boolean = false
-  forbidReconnect: boolean = false
-  pingTimeoutId: any = 0
-  pongTimeoutId: any = 0
+  ws = null
+  repeat
+  lockReconnect = false
+  forbidReconnect = false
+  pingTimeoutId = 0
+  pongTimeoutId = 0
 
-  onclose: (event: WebSocket.CloseEvent) => void = () => { }
-  onerror: (event: WebSocket.ErrorEvent) => void = () => { }
-  onopen: (event: WebSocket.Event) => void = () => { }
-  onmessage: (event: WebSocket.MessageEvent) => void = () => { }
-  onreconnect: () => void = () => { }
+  onclose = () => { }
+  onerror = () => { }
+  onopen = () => { }
+  onmessage = () => { }
+  onreconnect = () => { }
 
-  constructor(opions: options) {
+  constructor(opions) {
     Object.assign(this.options, opions);
     this.ws = null; // websocket实例
     this.repeat = 0;
@@ -126,7 +113,7 @@ export class ReconnectWebSocket {
     }, this.options.reconnectTimeout);
   }
 
-  send(msg: string) {
+  send(msg) {
     this.ws?.send(msg);
   }
 

@@ -1,5 +1,3 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-
 import Button from '../lib/components/Button.vue'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
@@ -14,37 +12,36 @@ const meta = {
     onClick: { action: 'clicked' },
   },
   args: { primary: false }, // default value
-} satisfies Meta<typeof Button>
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 /*
  *👇 Render functions are a framework specific feature to allow you control on how the component renders.
  * See https://storybook.js.org/docs/vue/api/csf
  * to learn how to use render functions.
  */
-export const Primary: Story = {
+export const Primary = {
   args: {
     primary: true,
     label: 'Button',
   },
 }
 
-export const Secondary: Story = {
+export const Secondary = {
   args: {
     primary: false,
     label: 'Button',
   },
 }
 
-export const Large: Story = {
+export const Large = {
   args: {
     label: 'Button',
     size: 'large',
   },
 }
 
-export const Small: Story = {
+export const Small = {
   args: {
     label: 'Button',
     size: 'small',

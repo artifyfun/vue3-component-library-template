@@ -11,12 +11,10 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "types": ["node"],
     "baseUrl": "./",
     "paths": {
       "~/*": ["src/lib/*"]
     }
   },
-  "include": ["src/lib/*.ts", "src/lib/*.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src/lib/*.js"]
 }

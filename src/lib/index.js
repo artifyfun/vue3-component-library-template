@@ -1,15 +1,13 @@
-import type { App } from 'vue'
 import * as plugins from './plugins'
 import * as components from './components'
 import * as directives from './directives'
 import * as utils from './utils'
-import type { PluginOptions, DirectiveName, PluginName, ComponentName } from './types'
 import './style.css'
 import { defu } from 'defu'
 
-const useComponentLibrary = (pluginOptions: PluginOptions): any => {
+const useComponentLibrary = (pluginOptions) => {
   /* ADD YOUR DEFAULT CONFIGURATION BELOW */
-  const DefaultPluginOptions: PluginOptions = {
+  const DefaultPluginOptions = {
     showLogs: true,
     components: {
       globallyRegister: false,
@@ -25,22 +23,22 @@ const useComponentLibrary = (pluginOptions: PluginOptions): any => {
     },
   }
 
-  const PluginOptions: PluginOptions = defu(pluginOptions, DefaultPluginOptions)
+  const PluginOptions = defu(pluginOptions, DefaultPluginOptions)
 
-  return (app: App) => {
+  return (app) => {
     if (PluginOptions.components?.globallyRegister) {
       for (const name in components) {
         /* Exclude Components */
         if (
           PluginOptions.components &&
           PluginOptions.components.exclude &&
-          PluginOptions.components.exclude.includes(name as ComponentName)
+          PluginOptions.components.exclude.includes(name)
         ) {
           log(name, name, false, PluginOptions.showLogs)
           continue
         }
         log(name, name, true, PluginOptions.showLogs)
-        app.component(name, components[name as ComponentName])
+        app.component(name, components[name])
       }
     } else {
       log('ALL COMPONENTS', false, false)
@@ -53,13 +51,13 @@ const useComponentLibrary = (pluginOptions: PluginOptions): any => {
         if (
           PluginOptions.plugins &&
           PluginOptions.plugins.exclude &&
-          PluginOptions.plugins.exclude.includes(name as PluginName)
+          PluginOptions.plugins.exclude.includes(name)
         ) {
           log(name, false, false, PluginOptions.showLogs)
           continue
         }
         log(name, false, true, PluginOptions.showLogs)
-        app.use(plugins[name as PluginName])
+        app.use(plugins[name])
       }
     } else {
       log('ALL PLUGINS', false, false)
@@ -72,13 +70,13 @@ const useComponentLibrary = (pluginOptions: PluginOptions): any => {
         if (
           PluginOptions.directives &&
           PluginOptions.directives.exclude &&
-          PluginOptions.directives.exclude.includes(name as DirectiveName)
+          PluginOptions.directives.exclude.includes(name)
         ) {
           log(name, false, false, PluginOptions.showLogs)
           continue
         }
         log(name, false, true, PluginOptions.showLogs)
-        app.directive(name, directives[name as DirectiveName])
+        app.directive(name, directives[name])
       }
     } else {
       log('ALL DIRECTIVES', false, false)
@@ -86,7 +84,7 @@ const useComponentLibrary = (pluginOptions: PluginOptions): any => {
   }
 }
 
-const log = (base: string, as: string | boolean, succ: boolean, showLogs: boolean = true) => {
+const log = (base, as, succ, showLogs = true) => {
   if (!showLogs) return
   as = as !== false ? as : false
   let m = as ? `globally added %c as %c <${as}>` : `imported %c %c`

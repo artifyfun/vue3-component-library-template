@@ -53,13 +53,13 @@
   </article>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import './page.css';
 import MyHeader from './Header.vue';
 
 import { ref } from 'vue';
 
-const user = ref<{ name: string } | null>(null);
+const user = ref(null);
 
 const onLogin = () => {
   user.value = { name: 'Jane Doe' };

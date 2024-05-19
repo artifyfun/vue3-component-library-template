@@ -4,20 +4,12 @@
   </button>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import './button.css'
 import { computed } from 'vue';
-interface ButtonProps {
-  label: string,
-  primary?: boolean,
-  size?: 'small' | 'medium' | 'large',
-  backgroundColor?: string,
-}
-const props = withDefaults(defineProps<ButtonProps>(), { primary: false });
+const props = defineProps(['label', 'primary', 'size', 'backgroundColor']);
 
-const emit = defineEmits<{
-  (e: 'click', id: number): void;
-}>();
+const emit = defineEmits(['click']);
 
 const classes = computed(() => ({
   'storybook-button': true,

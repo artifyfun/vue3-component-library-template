@@ -2,7 +2,7 @@
   <div class="card__shine" :class="classes"></div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   const props = defineProps(['rarity', 'subtypes'])
   const classes = () => {
     return `${props.rarity} ${props.subtypes}`

@@ -1,12 +1,10 @@
-import type { App } from 'vue'
-
 const helloPlugin = () => {
   console.log('hello from custom plugin!')
 }
 
 const customDirective = () => {
   helloPlugin()
-  return (app: App) => {
+  return (app) => {
     // app.component(..)
     // app.directive(..)
     // app.use(..)

@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onBeforeUnmount, watch, watchEffect } from 'vue'
 import { useSpring } from "@vueuse/motion";
 import { clamp, round } from "../helpers/Math";
@@ -37,22 +37,22 @@ import back_img from "../assets/img/tcg-card-back-2x.jpg";
 
 const galaxyPosition = Math.floor(Math.random() * 1500);
 
-type supertype = 'Pokémon' | 'Trainer';
-type subtype = 'Basic' | 'Supporter' | 'Stage 1' | 'Stage 2' | 'V' | 'Fusion Strike' | 'VMAX' | 'Single Strike' | 'Rapid Strike' | 'VSTAR' | 'Stadium' | 'Item' | 'Pokémon Tool';
-type rarity = 'Common' | 'Uncommon' | 'Rare Holo' | 'Rare Holo Galaxy' | 'Radiant Rare' | 'Rare Holo V' | 'Rare Ultra' | 'Rare Holo VMAX' | 'Rare Rainbow Alt' | 'Rare Holo VSTAR' | 'Rare Rainbow' | 'Rare Secret';
-export type card = {
-  id: string;
-  name: string;
-  supertype: supertype;
-  subtypes: subtype[];
-  number: string;
-  rarity: rarity;
-  cardLoading: boolean;
-  images: {
-    small: string,
-    large: string
-  }
-}
+// type supertype = 'Pokémon' | 'Trainer';
+// type subtype = 'Basic' | 'Supporter' | 'Stage 1' | 'Stage 2' | 'V' | 'Fusion Strike' | 'VMAX' | 'Single Strike' | 'Rapid Strike' | 'VSTAR' | 'Stadium' | 'Item' | 'Pokémon Tool';
+// type rarity = 'Common' | 'Uncommon' | 'Rare Holo' | 'Rare Holo Galaxy' | 'Radiant Rare' | 'Rare Holo V' | 'Rare Ultra' | 'Rare Holo VMAX' | 'Rare Rainbow Alt' | 'Rare Holo VSTAR' | 'Rare Rainbow' | 'Rare Secret';
+// export type card = {
+//   id: string;
+//   name: string;
+//   supertype: supertype;
+//   subtypes: subtype[];
+//   number: string;
+//   rarity: rarity;
+//   cardLoading: boolean;
+//   images: {
+//     small: string,
+//     large: string
+//   }
+// }
 
 const props = defineProps([
   'img',
@@ -66,7 +66,7 @@ const props = defineProps([
   'cardLoading'
 ])
 
-const card = ref<Element | null>(null)
+const card = ref(null)
 const rotator = ref(null)
 
 const springR = { stiffness: 666, damping: 25 }
@@ -79,9 +79,9 @@ const springRotateDeltaRef = ref({ x: 0, y: 0 })
 const springTranslateRef = ref({ x: 0, y: 0 })
 const springScaleRef = ref({ s: 1 })
 
-const getSpringControls = (ref: any, config: any) => {
+const getSpringControls = (ref, config) => {
   const spring = useSpring(ref.value, config)
-  return spring as any
+  return spring
 }
 
 const springRotate = getSpringControls(springRotateRef, springR)
@@ -95,7 +95,7 @@ const springScale = getSpringControls(springScaleRef, springD)
 const firstPop = ref(true)
 const interacting = ref(false)
 const imageLoading = ref(true)
-const debounce = ref<NodeJS.Timeout | number>(0)
+const debounce = ref(0)
 const front_img = ref("")
 
 const styles = ref()
@@ -149,7 +149,7 @@ const reposition = () => {
   }, 300);
 }
 
-const interact = (e: any) => {
+const interact = (e) => {
   if (props.active) {
     interacting.value = true;
   }
@@ -199,7 +199,7 @@ const imageLoader = () => {
   imageLoading.value = false;
 }
 
-const interactEnd = (e: any, delay = 100) => {
+const interactEnd = (e, delay = 100) => {
   setTimeout(() => {
     const snapStiff = 0.01;
     const snapDamp = 0.06;
