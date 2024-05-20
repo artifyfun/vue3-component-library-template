@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch, watchEffect } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, watchEffect, defineEmits } from 'vue'
 import { useSpring } from "@vueuse/motion";
 import { clamp, round } from "../helpers/Math";
 import CardShine from "./card-shine.vue";
@@ -65,6 +65,8 @@ const props = defineProps([
   'active',
   'cardLoading'
 ])
+
+const emit = defineEmits(['cardLoaded'])
 
 const cardRef = ref(null)
 const rotator = ref(null)
@@ -196,6 +198,7 @@ const interact = (e) => {
 }
 
 const imageLoader = () => {
+  emit('cardLoaded')
   imageLoading.value = false;
 }
 

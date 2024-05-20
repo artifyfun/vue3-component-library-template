@@ -72,7 +72,7 @@ export default defineConfig(({ mode }) => {
         lib: {
           entry: resolve(__dirname, 'src/lib/index.js'),
           name: 'ArtifyfunVueComponents',
-          fileName: 'artifyfun-vue-components',
+          fileName: 'index',
         },
         rollupOptions: {
           external: ['vue'],

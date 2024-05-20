@@ -27,12 +27,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/artifyfun-vue-components.umd.cjs",
-  "module": "./dist/artifyfun-vue-components.js",
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/artifyfun-vue-components.js",
-      "require": "./dist/artifyfun-vue-components.umd.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
     },
     "./style.css": "./dist/style.css"
   },
@@ -41,6 +41,8 @@
     "dev": "vite",
     "build": "pnpm test && vite build --mode production && pnpm build:pages",
     "build:lib": "pnpm test && vite build --mode production",
+    "deploy": "pnpm build:lib && node ./scripts/deploy.js",
+    "dp": "node ./scripts/deploy.js",
     "clean": "rm -rf ./dist && rm -rf ./live-demo && rm -rf ./coverage && rm -rf ./storybook-static",
     "coverage:web": "http-server ./coverage",
     "changeset": "changeset",

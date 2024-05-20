@@ -45,7 +45,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 dayjs.locale('zh-cn')
 
-const emits = defineEmits(['uploadDone', 'update:modelValue'])
+const emit = defineEmits(['uploadDone', 'update:modelValue'])
 
 const props = defineProps({
   modelValue: {
@@ -122,13 +122,13 @@ const handleChange = ({ file, fileList }) => {
   })
 
   if (file.status === 'done') {
-    emits('update:modelValue', file.response?.name)
-    emits('uploadDone', file.response?.name)
+    emit('update:modelValue', file.response?.name)
+    emit('uploadDone', file.response?.name)
   }
 }
 
 const handleRemove = () => {
-  emits('update:modelValue')
+  emit('update:modelValue')
 }
 
 const handlePreview = async file => {
