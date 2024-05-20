@@ -41,6 +41,7 @@ export default defineConfig(({ mode }) => {
         ],
       }),
     ],
+    define: { 'process.env': {} },
     resolve: {
       alias: {
         '~': resolve(__dirname, 'src', 'lib'),

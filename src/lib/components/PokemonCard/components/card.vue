@@ -1,6 +1,6 @@
 <template>
   <div class="pokemon-card"
-       :class="{ active, interacting, image__loading: imageLoading, card__loading: cardLoading }"
+       :class="{ active, interacting, image__loading: imageLoading || cardLoading, card__loading: cardLoading }"
        ref="cardRef"
        :style="styles"
        :data-subtypes="subtypes"
@@ -15,7 +15,7 @@
         <img class="card__back"
              :src="back_img" />
         <div class="card__front">
-          <img :src="front_img"
+          <img v-if="!cardLoading" :src="img"
                v-on:load="imageLoader" />
           <card-shine :subtypes="subtypes"
                       :supertype="supertype" />
@@ -33,7 +33,7 @@ import { useSpring } from "@vueuse/motion";
 import { clamp, round } from "../helpers/Math";
 import CardShine from "./card-shine.vue";
 import CardGlare from "./card-glare.vue";
-import back_img from "../assets/img/tcg-card-back-2x.jpg";
+import defaultCardBackImage from "../assets/img/tcg-card-back-2x.jpg";
 
 const galaxyPosition = Math.floor(Math.random() * 1500);
 
@@ -65,6 +65,8 @@ const props = defineProps([
   'active',
   'cardLoading'
 ])
+
+const back_img = ref(defaultCardBackImage)
 
 const emit = defineEmits(['cardLoaded'])
 
@@ -98,7 +100,6 @@ const firstPop = ref(true)
 const interacting = ref(false)
 const imageLoading = ref(true)
 const debounce = ref(0)
-const front_img = ref("")
 
 const styles = ref()
 
@@ -244,14 +245,14 @@ const _popover = () => {
   let scaleH = (window.innerHeight / rect.height) * 0.9;
   let scaleF = 1.75;
   _setCenter();
-  if (firstPop.value) {
+  // if (firstPop.value) {
     delay = 1000;
     springRotateDelta.set({
       x: 360,
       y: 0,
     });
-    firstPop.value = false;
-  }
+    // firstPop.value = false;
+  // }
   springScale.set({ s: Math.min(scaleW, scaleH, scaleF) });
   interactEnd(null, delay);
 }
@@ -277,11 +278,6 @@ watch(
 )
 
 onMounted(() => {
-  const img_base = props.img.startsWith("http")
-    ? ""
-    : "https://images.pokemontcg.io/";
-  front_img.value = img_base + props.img;
-
   if (props.backimg) {
     back_img.value = props.backimg;
   }

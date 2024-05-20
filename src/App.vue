@@ -8,14 +8,14 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-// import PokemonCard from './lib/components/PokemonCard'
+import PokemonCard from './lib/components/PokemonCard'
 import ImageUploader from './lib/components/ImageUploader/index.vue'
 
 // import '../dist/style.css'
 // import {
 //   PokemonCard,
 //   ImageUploader
-// } from '../dist/artifyfun-vue-components.js'
+// } from '../dist/index.js'
 
 const cardActive = ref(false)
 
@@ -27,6 +27,7 @@ const card = ref({
   number: "1",
   rarity: "common",
   gallery: true,
+  cardLoading: false,
   img: 'https://images.pokemontcg.io/sm35/1_hires.png'
 })
 
