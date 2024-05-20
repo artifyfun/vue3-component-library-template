@@ -10,14 +10,14 @@
 </script>
 
 <style lang="less">
-.card[data-rarity="rare holo"][data-gallery="true"] .card__glare {
+.pokemon-card[data-rarity="rare holo"][data-gallery="true"] .card__glare {
   background: radial-gradient(farthest-corner circle at var(--mx) var(--my),
       rgba(255, 255, 255, 0.8) 10%,
       rgba(255, 255, 255, 0.6) 35%,
       rgba(0, 0, 0, 1) 85%);
 }
 
-.card[data-rarity="radiant rare"] .card__glare {
+.pokemon-card[data-rarity="radiant rare"] .card__glare {
   background-image:
     radial-gradient(farthest-corner circle at var(--mx) var(--my),
       rgba(255, 255, 255, .9) 10%,

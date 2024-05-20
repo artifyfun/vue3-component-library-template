@@ -1,7 +1,7 @@
 <template>
-  <div class="card"
+  <div class="pokemon-card"
        :class="{ active, interacting, image__loading: imageLoading, card__loading: cardLoading }"
-       ref="card"
+       ref="cardRef"
        :style="styles"
        :data-subtypes="subtypes"
        :data-supertype="supertype"
@@ -66,7 +66,7 @@ const props = defineProps([
   'cardLoading'
 ])
 
-const card = ref(null)
+const cardRef = ref(null)
 const rotator = ref(null)
 
 const springR = { stiffness: 666, damping: 25 }
@@ -126,8 +126,8 @@ watchEffect(() => {
 })
 
 const setCenter = () => {
-  if (!card.value) return
-  const rect = card.value.getBoundingClientRect(); // get element's size/position
+  if (!cardRef.value) return
+  const rect = cardRef.value.getBoundingClientRect(); // get element's size/position
   const view = document.documentElement; // get window/viewport size
 
   const delta = {
@@ -220,8 +220,8 @@ const interactEnd = (e, delay = 100) => {
 }
 
 const _setCenter = () => {
-  if (!card.value) return
-  const rect = card.value.getBoundingClientRect(); // get element's size/position
+  if (!cardRef.value) return
+  const rect = cardRef.value.getBoundingClientRect(); // get element's size/position
   const view = document.documentElement; // get window/viewport size
   const delta = {
     x: round(view.clientWidth / 2 - rect.x - rect.width / 2),
@@ -234,8 +234,8 @@ const _setCenter = () => {
 }
 
 const _popover = () => {
-  if (!card.value) return
-  const rect = card.value.getBoundingClientRect(); // get element's size/position
+  if (!cardRef.value) return
+  const rect = cardRef.value.getBoundingClientRect(); // get element's size/position
   let delay = 100;
   let scaleW = (window.innerWidth / rect.width) * 0.9;
   let scaleH = (window.innerHeight / rect.height) * 0.9;
@@ -294,7 +294,7 @@ onBeforeUnmount(() => {
 <style lang="less">
 @import "../assets/css/cards.less";
 
-:root {
+.pokemon-card {
   --mx: 50%;
   --my: 50%;
   --s: 1;
@@ -307,9 +307,7 @@ onBeforeUnmount(() => {
   --posx: 50%;
   --posy: 50%;
   --hyp: 0;
-}
 
-.card {
   --radius: 4.55% / 3.5%;
   --back: #004177;
   --glow: #69d1e9;
