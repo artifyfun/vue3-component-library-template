@@ -3,10 +3,10 @@
        :class="{ active, interacting, image__loading: imageLoading || cardLoading, card__loading: cardLoading }"
        ref="cardRef"
        :style="styles"
-       :data-subtypes="subtypes"
-       :data-supertype="supertype"
-       :data-rarity="rarity"
-       :data-gallery="gallery">
+       :data-subtypes="cardStyles.subtypes"
+       :data-supertype="cardStyles.supertype"
+       :data-rarity="cardStyles.rarity"
+       :data-gallery="cardStyles.gallery">
     <div class="card__translater">
       <button class="card__rotator"
               ref="rotator"
@@ -17,10 +17,10 @@
         <div class="card__front">
           <img v-if="!cardLoading" :src="img"
                v-on:load="imageLoader" />
-          <card-shine :subtypes="subtypes"
-                      :supertype="supertype" />
-          <card-glare :subtypes="subtypes"
-                      :rarity="rarity" />
+          <card-shine :subtypes="cardStyles.subtypes"
+                      :supertype="cardStyles.supertype" />
+          <card-glare :subtypes="cardStyles.subtypes"
+                      :rarity="cardStyles.rarity" />
         </div>
       </button>
     </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch, watchEffect, defineEmits } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, watch, watchEffect, defineEmits } from 'vue'
 import { useSpring } from "@vueuse/motion";
 import { clamp, round } from "../helpers/Math";
 import CardShine from "./card-shine.vue";
@@ -47,6 +47,7 @@ const galaxyPosition = Math.floor(Math.random() * 1500);
 //   subtypes: subtype[];
 //   number: string;
 //   rarity: rarity;
+//   gallery: boolean;
 //   cardLoading: boolean;
 //   images: {
 //     small: string,
@@ -65,6 +66,13 @@ const props = defineProps([
   'active',
   'cardLoading'
 ])
+
+const cardStyles = reactive({
+  supertype: 'Pokémon',
+  subtypes: ['Basic'],
+  rarity: 'Common',
+  gallery: true,
+})
 
 const back_img = ref(defaultCardBackImage)
 
@@ -96,7 +104,7 @@ const springRotateDelta = getSpringControls(springRotateDeltaRef, springD)
 const springTranslate = getSpringControls(springTranslateRef, springD)
 const springScale = getSpringControls(springScaleRef, springD)
 
-const firstPop = ref(true)
+// const firstPop = ref(true)
 const interacting = ref(false)
 const imageLoading = ref(true)
 const debounce = ref(0)
@@ -245,14 +253,14 @@ const _popover = () => {
   let scaleH = (window.innerHeight / rect.height) * 0.9;
   let scaleF = 1.75;
   _setCenter();
-  // if (firstPop.value) {
+  if (!props.cardLoading) {
     delay = 1000;
     springRotateDelta.set({
       x: 360,
       y: 0,
     });
     // firstPop.value = false;
-  // }
+  }
   springScale.set({ s: Math.min(scaleW, scaleH, scaleF) });
   interactEnd(null, delay);
 }
@@ -275,6 +283,24 @@ watch(
       }
     }
   }, { immediate: false }
+)
+
+const supertypes = ['Pokémon', 'Trainer'].map((type) => type.toLowerCase())
+const subtypes = ['Basic', 'Supporter', 'Stage 1', 'Stage 2', 'V', 'Fusion Strike', 'VMAX', 'Single Strike', 'Rapid Strike', 'VSTAR', 'Stadium', 'Item', 'Pokémon Tool'].map((type) => type.toLowerCase())
+const raritys = ['Common', 'Uncommon', 'Rare Holo', 'Rare Holo Galaxy', 'Radiant Rare', 'Rare Holo V', 'Rare Ultra', 'Rare Holo VMAX', 'Rare Rainbow Alt', 'Rare Holo VSTAR', 'Rare Rainbow', 'Rare Secret'].map((type) => type.toLowerCase())
+const gallerys = [true, false]
+const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
+watch(
+  () => props.img,
+  (n, o) => {
+    Object.assign(cardStyles, {
+      supertype: props.supertype || getRandom(supertypes),
+      subtypes: props.subtypes || [getRandom(subtypes)],
+      rarity: props.rarity || getRandom(raritys),
+      gallery: props.gallery || getRandom(gallerys),
+    })
+  }, { immediate: true }
 )
 
 onMounted(() => {
