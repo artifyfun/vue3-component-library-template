@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite';
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
+// import Components from 'unplugin-vue-components/vite';
+// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 const origin = 'http://localhost:7011/'
 
@@ -33,13 +33,13 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       vue(),
-      Components({
-        resolvers: [
-          AntDesignVueResolver({
-            importStyle: false, // css in js
-          }),
-        ],
-      }),
+      // Components({
+      //   resolvers: [
+      //     AntDesignVueResolver({
+      //       importStyle: false, // css in js
+      //     }),
+      //   ],
+      // }),
     ],
     define: { 'process.env': { ...process.env } },
     resolve: {
@@ -76,10 +76,11 @@ export default defineConfig(({ mode }) => {
           fileName: 'index',
         },
         rollupOptions: {
-          external: ['vue', 'ant-design-vue', '@ant-design/icons-vue'],
+          external: ['vue', 'ant-design-vue'],
           output: {
             globals: {
               vue: 'Vue',
+              'ant-design-vue': 'antDesignVue',
             },
           },
         },

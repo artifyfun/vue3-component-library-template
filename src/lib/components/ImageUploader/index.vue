@@ -32,6 +32,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
+import { Upload as AUpload, Modal as AModal } from 'ant-design-vue'
 
 const emit = defineEmits(['uploadDone', 'update:modelValue'])
 
