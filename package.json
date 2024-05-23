@@ -1,7 +1,7 @@
 {
   "name": "artifyfun-vue-components",
   "author": "artifyfun <artifyfun@mail.com> (https://github.com/artifyfun)",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
   "private": false,
   "description": "Artifyfun Vue Components For Low Code Development",

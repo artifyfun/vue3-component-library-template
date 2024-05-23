@@ -1,59 +1,43 @@
 <template>
   <div class="image-uploader">
-    <a-config-provider
-      :locale="zhCN"
-      :theme="{
-        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-      }"
+    <div class="showcase" v-if="showShowcase && maxCount === 1 && state.fileList[0]?.url">
+      <img :src="state.fileList[0]?.url" :alt="state.fileList[0]?.name" />
+    </div>
+    <a-upload
+      class="uploader"
+      ref="uploaderRef"
+      v-model:file-list="state.fileList"
+      :action="action"
+      :listType="listType"
+      :accept="accept"
+      :disabled="disabled"
+      :maxCount="maxCount"
+      :multiple="multiple"
+      :showUploadList="showUploadList"
+      @preview="handlePreview"
+      @change="handleChange"
+      @remove="handleRemove"
     >
-      <div class="showcase" v-if="showShowcase && maxCount === 1 && state.fileList[0]?.url">
-        <img :src="state.fileList[0]?.url" :alt="state.fileList[0]?.name" />
+      <div class="uploader-btn" v-if="state.fileList.length < maxCount">
+        <plus-outlined />
+        <div style="margin-top: 8px">上传图片</div>
       </div>
-      <a-upload
-        class="uploader"
-        ref="uploaderRef"
-        v-model:file-list="state.fileList"
-        :action="action"
-        :listType="listType"
-        :accept="accept"
-        :disabled="disabled"
-        :maxCount="maxCount"
-        :multiple="multiple"
-        :showUploadList="showUploadList"
-        @preview="handlePreview"
-        @change="handleChange"
-        @remove="handleRemove"
-      >
-        <div class="uploader-btn" v-if="state.fileList.length < maxCount">
-          <plus-outlined />
-          <div style="margin-top: 8px">上传图片</div>
-        </div>
-      </a-upload>
-      <a-modal :open="state.previewVisible" :title="state.previewTitle" :footer="null" @cancel="handleCancel">
-        <img alt="example" style="width: 100%" :src="state.previewImage" />
-      </a-modal>
-    </a-config-provider>
+    </a-upload>
+    <a-modal :open="state.previewVisible" :title="state.previewTitle" :footer="null" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="state.previewImage" />
+    </a-modal>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-import { theme } from 'ant-design-vue'
-import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import dayjs from 'dayjs'
-import 'dayjs/locale/zh-cn'
-dayjs.locale('zh-cn')
 
 const emit = defineEmits(['uploadDone', 'update:modelValue'])
 
 const props = defineProps({
   modelValue: {
     type: String,
-  },
-  isDark: {
-    type: Boolean,
-    default: false,
   },
   action: {
     type: String,

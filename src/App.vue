@@ -3,7 +3,7 @@
     <PokemonCard v-bind="card"
                  @click.native.stop="cardActive = !cardActive"
                  :active="cardActive" />
-    <ImageUploader :isDark="false" />
+    <ImageUploader />
   </div>
 </template>
 <script setup>

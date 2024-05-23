@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => {
         ],
       }),
     ],
-    define: { 'process.env': {} },
+    define: { 'process.env': { ...process.env } },
     resolve: {
       alias: {
         '~': resolve(__dirname, 'src', 'lib'),
@@ -76,7 +76,7 @@ export default defineConfig(({ mode }) => {
           fileName: 'index',
         },
         rollupOptions: {
-          external: ['vue'],
+          external: ['vue', 'ant-design-vue', '@ant-design/icons-vue'],
           output: {
             globals: {
               vue: 'Vue',
