@@ -335,7 +335,7 @@ onBeforeUnmount(() => {
 
   --radius: 4.55% / 3.5%;
   --back: #004177;
-  --glow: #69d1e9;
+  --glow: #aaaaaa;
   z-index: calc(var(--s) * 100);
   transform: translate3d(0, 0, 0.1px);
   will-change: transform, visibility;
