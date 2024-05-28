@@ -42,7 +42,7 @@ const props = defineProps({
   },
   action: {
     type: String,
-    default: '/workflows/api/upload/image',
+    default: '/workflows/api/upload/image?key=workflow_940_6e44e545',
   },
   accept: {
     type: String,
@@ -77,7 +77,6 @@ const props = defineProps({
 const uploaderRef = ref(null)
 
 const state = reactive({
-  showDialog: true,
   fileList: [],
   previewVisible: false,
   previewImage: '',

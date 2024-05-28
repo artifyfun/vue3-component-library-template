@@ -5,7 +5,7 @@ export default {
 		noSupported: '浏览器不支持该功能，请使用IE10以上或其他现在浏览器！',
 		success: '上传成功',
 		fail: '图片上传失败',
-		preview: '头像预览',
+		preview: '预览',
 		btn: {
 			off: '取消',
 			close: '关闭',
@@ -24,7 +24,7 @@ export default {
 		noSupported: '瀏覽器不支持該功能，請使用IE10以上或其他現代瀏覽器！',
 		success: '上傳成功',
 		fail: '圖片上傳失敗',
-		preview: '頭像預覽',
+		preview: '預覽',
 		btn: {
 			off: '取消',
 			close: '關閉',

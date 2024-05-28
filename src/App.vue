@@ -4,12 +4,16 @@
                  @click.native.stop="cardActive = !cardActive"
                  :active="cardActive" />
     <ImageUploader />
+    <ImageCropUploader />
+    <DeepChat />
   </div>
 </template>
 <script setup>
 import { ref } from 'vue'
-import PokemonCard from './lib/components/PokemonCard'
-import ImageUploader from './lib/components/ImageUploader/index.vue'
+// import PokemonCard from './lib/components/PokemonCard'
+// import ImageUploader from './lib/components/ImageUploader/index.vue'
+import ImageCropUploader from './lib/components/ImageCropUploader/index.vue'
+import DeepChat from './lib/components/DeepChat/index.vue'
 
 // import '../dist/style.css'
 // import {

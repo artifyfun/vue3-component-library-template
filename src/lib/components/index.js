@@ -3,3 +3,5 @@
 // export { default as Header } from './Header.vue'
 export { default as PokemonCard } from './PokemonCard'
 export { default as ImageUploader } from './ImageUploader/index.vue'
+export { default as ImageCropUploader } from './ImageCropUploader/index.vue'
+

@@ -1,7 +1,7 @@
 {
   "name": "artifyfun-vue-components",
   "author": "artifyfun <artifyfun@mail.com> (https://github.com/artifyfun)",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "license": "MIT",
   "private": false,
   "description": "Artifyfun Vue Components For Low Code Development",
@@ -60,12 +60,15 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
-    "ant-design-vue": "^4.1.2",
-    "axios": "^1.6.7",
-    "dayjs": "^1.11.11",
     "@vitejs/plugin-vue": "^4.5.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/motion": "^2.1.0",
+    "ant-design-vue": "^4.1.2",
+    "axios": "^1.6.7",
+    "dayjs": "^1.11.11",
+    "deep-chat": "latest",
+    "highlight.js": "^11.9.0",
+    "microsoft-cognitiveservices-speech-sdk": "^1.36.0",
     "vue": "3.4.23",
     "ws": "^8.16.0"
   },
