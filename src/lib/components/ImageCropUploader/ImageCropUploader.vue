@@ -396,17 +396,13 @@ export default {
 
   methods: {
     open() {
+      this.reset()
       this.visible = true
-      if (![1].includes(this.step)) {
-        this.reset()
-      }
     },
     // 关闭控件
     off() {
       this.visible = false
-      if (this.step == 3 && this.loading == 2) {
-        this.setStep(1)
-      }
+      this.setStep(1)
     },
     // 设置步骤
     setStep(no) {
