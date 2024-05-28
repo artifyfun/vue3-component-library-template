@@ -495,11 +495,11 @@ export default {
           x = 0,
           y = 0
         // 图片像素不达标
-        if (nWidth < width || nHeight < height) {
-          that.hasError = true
-          that.errorMsg = lang.error.lowestPx + width + '*' + height
-          return false
-        }
+        // if (nWidth < width || nHeight < height) {
+        //   that.hasError = true
+        //   that.errorMsg = lang.error.lowestPx + width + '*' + height
+        //   return false
+        // }
         if (ratio > nRatio) {
           h = w / nRatio
           y = (sim.height - h) / 2
@@ -681,8 +681,8 @@ export default {
         sWidth = sim.width,
         sHeight = sim.height,
         // 新宽高
-        nWidth = minWidth + ((maxWidth - minWidth) * newRange) / 100,
-        nHeight = minHeight + ((maxHeight - minHeight) * newRange) / 100,
+        nWidth = minWidth + (Math.abs((maxWidth - minWidth)) * newRange) / 100,
+        nHeight = minHeight + (Math.abs((maxHeight - minHeight)) * newRange) / 100,
         // 新坐标（根据蒙版中心点缩放）
         nX = sWidth / 2 - (nWidth / width) * (sWidth / 2 - x),
         nY = sHeight / 2 - (nHeight / height) * (sHeight / 2 - y)
