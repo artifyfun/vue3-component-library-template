@@ -1,10 +1,13 @@
 <template>
-  <div class="vue-image-crop-upload" v-show="modelValue">
+  <a-modal
+    wrapClassName="vue-image-crop-upload"
+    v-model:open="visible"
+    title=""
+    :maskClosable="false"
+    :width="640"
+    :afterClose="off"
+  >
     <div class="vicp-wrap">
-      <div class="vicp-close" @click="off">
-        <i class="vicp-icon4"></i>
-      </div>
-
       <div class="vicp-step1" v-show="step == 1">
         <div
           class="vicp-drop-area"
@@ -24,9 +27,6 @@
           <input type="file" accept="image/*" v-show="false" v-if="step == 1" @change="handleChange" ref="fileinput" />
         </div>
         <div class="vicp-error" v-show="hasError"><i class="vicp-icon2"></i> {{ errorMsg }}</div>
-        <div class="vicp-operate">
-          <a @click.prevent="off" @mousedown="ripple">{{ lang.btn.off }}</a>
-        </div>
       </div>
 
       <div class="vicp-step2" v-if="step == 2">
@@ -82,10 +82,6 @@
             </div>
           </div>
         </div>
-        <div class="vicp-operate">
-          <a @click.prevent="setStep(1)" @mousedown="ripple">{{ lang.btn.back }}</a>
-          <a class="vicp-operate-btn" @click.prevent="prepareUpload" @mousedown="ripple">{{ lang.btn.save }}</a>
-        </div>
       </div>
 
       <div class="vicp-step3" v-if="step == 3">
@@ -97,23 +93,37 @@
           <div class="vicp-error" v-show="hasError"><i class="vicp-icon2"></i> {{ errorMsg }}</div>
           <div class="vicp-success" v-show="loading === 2"><i class="vicp-icon3"></i> {{ lang.success }}</div>
         </div>
-        <div class="vicp-operate">
-          <a @click.prevent="setStep(2)" @mousedown="ripple">{{ lang.btn.back }}</a>
-          <a @click.prevent="off" @mousedown="ripple">{{ lang.btn.close }}</a>
-        </div>
       </div>
       <canvas v-show="false" :width="width" :height="height" ref="canvas"></canvas>
     </div>
-  </div>
+    <template #footer>
+      <template v-if="[1].includes(step)">
+        <a-button @click="off">{{ lang.btn.off }}</a-button>
+      </template>
+      <template v-if="[2].includes(step)">
+        <a-button @click="setStep(1)">{{ lang.btn.back }}</a-button>
+        <a-button type="primary" @click="prepareUpload">{{ lang.btn.save }}</a-button>
+      </template>
+      <template v-if="[3].includes(step)">
+        <a-button @click="setStep(2)">{{ lang.btn.back }}</a-button>
+        <a-button @click="off">{{ lang.btn.close }}</a-button>
+      </template>
+    </template>
+  </a-modal>
 </template>
 
 <script>
+import { Modal as AModal, Button as AButton } from 'ant-design-vue'
+
 import language from './utils/language.js'
 import mimes from './utils/mimes.js'
 import data2blob from './utils/data2blob.js'
-import effectRipple from './utils/effectRipple.js'
 
 export default {
+  components: {
+    AModal,
+    AButton,
+  },
   props: {
     // 域，上传文件name，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     field: {
@@ -124,11 +134,6 @@ export default {
     uuid: {
       type: String,
       default: '0',
-    },
-    // 显示该控件与否
-    modelValue: {
-      type: Boolean,
-      default: true,
     },
     // 上传地址
     url: {
@@ -241,6 +246,7 @@ export default {
       isSupported,
       // 浏览器是否支持触屏事件
       isSupportTouch: document.hasOwnProperty('ontouchstart'),
+      visible: false,
 
       // 步骤
       step: 1, //1选择文件 2剪裁 3上传
@@ -382,23 +388,6 @@ export default {
     },
   },
 
-  watch: {
-    modelValue(newValue) {
-      if (newValue && this.loading != 1) {
-        this.reset()
-      }
-    },
-  },
-
-  created() {
-    // 绑定按键esc隐藏此插件事件
-    document.addEventListener('keyup', this.handleEscClose)
-  },
-
-  beforeUnmount() {
-    document.removeEventListener('keyup', this.handleEscClose)
-  },
-
   mounted() {
     if (this.sourceImgUrl) {
       this.startCrop()
@@ -406,30 +395,22 @@ export default {
   },
 
   methods: {
-    handleEscClose(e) {
-      if (this.modelValue && (e.key == 'Escape' || e.keyCode == 27)) {
-        this.off()
+    open() {
+      this.visible = true
+      if (![1].includes(this.step)) {
+        this.reset()
       }
-    },
-    // 点击波纹效果
-    ripple(e) {
-      effectRipple(e)
     },
     // 关闭控件
     off() {
-      setTimeout(() => {
-        this.$emit('update:modelValue', false)
-        if (this.step == 3 && this.loading == 2) {
-          this.setStep(1)
-        }
-      }, 200)
+      this.visible = false
+      if (this.step == 3 && this.loading == 2) {
+        this.setStep(1)
+      }
     },
     // 设置步骤
     setStep(no) {
-      // 延时是为了显示动画效果呢，哈哈哈
-      setTimeout(() => {
-        this.step = no
-      }, 200)
+      this.step = no
     },
 
     /* 图片选择区域函数绑定
@@ -825,19 +806,16 @@ export default {
       }).then(
         // 上传成功
         function (resData) {
-          if (that.modelValue) {
-            that.loading = 2
-            that.$emit('crop-upload-success', resData, field, uuid)
-          }
+          that.loading = 2
+          that.$emit('crop-upload-success', resData, field, uuid)
+          that.visible = false
         },
         // 上传失败
         function (sts) {
-          if (that.modelValue) {
-            that.loading = 3
-            that.hasError = true
-            that.errorMsg = lang.fail
-            that.$emit('crop-upload-fail', sts, field, uuid)
-          }
+          that.loading = 3
+          that.hasError = true
+          that.errorMsg = lang.fail
+          that.$emit('crop-upload-fail', sts, field, uuid)
         }
       )
     },
@@ -846,7 +824,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 @-webkit-keyframes vicp_progress {
   0% {
     background-position-y: 0;
@@ -895,92 +872,15 @@ export default {
   }
 }
 
-.vue-image-crop-upload {
-  position: fixed;
-  display: block;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  z-index: 10000;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
-  -webkit-tap-highlight-color: transparent;
-  -moz-tap-highlight-color: transparent;
-}
-
 .vue-image-crop-upload .vicp-wrap {
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
-  position: fixed;
-  display: block;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  z-index: 10000;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: auto;
   width: 600px;
   height: 330px;
   padding: 25px;
-  background-color: #fff;
-  border-radius: 2px;
   -webkit-animation: vicp 0.12s ease-in;
   animation: vicp 0.12s ease-in;
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close {
-  position: absolute;
-  right: -30px;
-  top: -30px;
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4 {
-  position: relative;
-  display: block;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  -webkit-transition: -webkit-transform 0.18s;
-  transition: -webkit-transform 0.18s;
-  transition: transform 0.18s;
-  transition: transform 0.18s, -webkit-transform 0.18s;
-  -webkit-transform: rotate(0);
-  -ms-transform: rotate(0);
-  transform: rotate(0);
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4::after,
-.vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4::before {
-  -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
-  content: '';
-  position: absolute;
-  top: 12px;
-  left: 4px;
-  width: 20px;
-  height: 3px;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  background-color: #fff;
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4::after {
-  -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4:hover {
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
 }
 
 .vue-image-crop-upload .vicp-wrap .vicp-step1 .vicp-drop-area {
@@ -1581,36 +1481,6 @@ export default {
   line-height: 100px;
 }
 
-.vue-image-crop-upload .vicp-wrap .vicp-operate {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-operate a {
-  position: relative;
-  float: left;
-  display: block;
-  margin-left: 10px;
-  width: 100px;
-  height: 36px;
-  line-height: 36px;
-  text-align: center;
-  cursor: pointer;
-  font-size: 14px;
-  color: #1677ff;
-  border-radius: 2px;
-  overflow: hidden;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.vue-image-crop-upload .vicp-wrap .vicp-operate a:hover {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-
 .vue-image-crop-upload .vicp-wrap .vicp-error,
 .vue-image-crop-upload .vicp-wrap .vicp-success {
   display: block;
@@ -1675,32 +1545,5 @@ export default {
   -webkit-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
-}
-
-.e-ripple {
-  position: absolute;
-  border-radius: 100%;
-  background-color: rgba(0, 0, 0, 0.15);
-  background-clip: padding-box;
-  pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
-  opacity: 1;
-}
-
-.e-ripple.z-active {
-  opacity: 0;
-  -webkit-transform: scale(2);
-  -ms-transform: scale(2);
-  transform: scale(2);
-  -webkit-transition: opacity 1.2s ease-out, -webkit-transform 0.6s ease-out;
-  transition: opacity 1.2s ease-out, -webkit-transform 0.6s ease-out;
-  transition: opacity 1.2s ease-out, transform 0.6s ease-out;
-  transition: opacity 1.2s ease-out, transform 0.6s ease-out, -webkit-transform 0.6s ease-out;
 }
 </style>
