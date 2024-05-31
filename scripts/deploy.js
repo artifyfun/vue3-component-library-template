@@ -12,15 +12,15 @@ componentFiles.forEach(file => {
   data.version = pkg.version
   data.npm.version = pkg.version
   data.npm.package = pkg.name
-  data.npm.script = `/lib/${pkg.name}@${pkg.version}/dist/index.js`
-  data.npm.css = `/lib/${pkg.name}@${pkg.version}/dist/style.css`
+  data.npm.script = `/assets/lib/${pkg.name}@${pkg.version}/dist/index.js`
+  data.npm.css = `/assets/lib/${pkg.name}@${pkg.version}/dist/style.css`
   fs.writeFileSync(file.source, JSON.stringify(data, null, 2))
 })
 
 const files = [
   {
     source: 'dist',
-    destination: `../tiny-engine-webservice/app/public/lib/${pkg.name}@${pkg.version}/dist`
+    destination: `../tiny-engine-webservice/app/public/assets/lib/${pkg.name}@${pkg.version}/dist`
   },
   ...componentFiles
 ]
