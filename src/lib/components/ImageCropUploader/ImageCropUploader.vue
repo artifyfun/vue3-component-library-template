@@ -1024,7 +1024,7 @@ export default {
   border-radius: 100%;
   line-height: 18px;
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
   background-color: rgba(0, 0, 0, 0.08);
   color: #fff;
