@@ -6,6 +6,8 @@
   >
     <a-app class="ant-app">
       <div class="overview">
+        <a-divider>Deadline</a-divider>
+        <Deadline />
         <a-divider>ImageUploader</a-divider>
         <ImageUploader />
         <a-divider>DeepChat</a-divider>
@@ -38,10 +40,13 @@ import { useDark, useToggle } from '@vueuse/core'
 import { BulbOutlined, SyncOutlined } from '@ant-design/icons-vue';
 import { theme, ConfigProvider as AConfigProvider, App as AApp, Divider as ADivider, FloatButtonGroup as AFloatButtonGroup, FloatButton as AFloatButton, BackTop as ABackTop } from 'ant-design-vue'
 
-import PokemonCard from './lib/components/PokemonCard'
-import ImageUploader from './lib/components/ImageUploader/index.vue'
-import ImageCropUploader from './lib/components/ImageCropUploader/index.vue'
-import DeepChat from './lib/components/DeepChat/index.vue'
+import {
+  PokemonCard,
+  ImageUploader,
+  ImageCropUploader,
+  DeepChat,
+  Deadline
+} from './lib'
 
 // import '../dist/style.css'
 // import {
